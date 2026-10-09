@@ -25,7 +25,9 @@ TARGET_NO_BOOTLOADER := true
 TARGET_SCREEN_DENSITY := 480
 
 # Kernel
-BOARD_BOOTIMG_HEADER_VERSION := 4
+# NOTE: 12.1 uses BOARD_BOOT_HEADER_VERSION (the old BOARD_BOOTIMG_HEADER_VERSION
+# is silently ignored). >= 3 is what enables BUILDING_VENDOR_BOOT_IMAGE.
+BOARD_BOOT_HEADER_VERSION := 4
 BOARD_KERNEL_BASE := 0x00000000
 BOARD_KERNEL_CMDLINE := 
 BOARD_KERNEL_PAGESIZE := 4096
@@ -49,6 +51,18 @@ BOARD_USERDATAIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
 TARGET_COPY_OUT_VENDOR := vendor
 
+# Recovery-in-vendor_boot (this device has NO recovery partition).
+# These four together are what makes 12.1 emit vendor_boot.img with the TWRP
+# ramdisk as the vendor ramdisk:
+#   BOARD_BOOT_HEADER_VERSION >= 4              -> BUILDING_VENDOR_BOOT_IMAGE := true
+#   BOARD_MOVE_RECOVERY_RESOURCES_TO_VENDOR_BOOT -> recovery resources go to vendor_boot
+#   BOARD_VENDOR_BOOTIMAGE_PARTITION_SIZE        -> assert-max-image-size (correct spelling!)
+#   BOARD_INCLUDE_DTB_IN_BOOTIMG + --dtb         -> panel/clock device tree
+BOARD_MOVE_RECOVERY_RESOURCES_TO_VENDOR_BOOT := true
+BOARD_VENDOR_BOOTIMAGE_PARTITION_SIZE := 104857600
+BOARD_INCLUDE_DTB_IN_BOOTIMG := true
+BOARD_MKBOOTIMG_ARGS += --dtb $(TARGET_PREBUILT_DTB)
+
 # Platform
 TARGET_BOARD_PLATFORM := ums9230
 
@@ -63,5 +77,5 @@ TW_USE_TOOLBOX := true
 # Hack: prevent anti rollback
 PLATFORM_SECURITY_PATCH := 2099-12-31
 VENDOR_SECURITY_PATCH := 2099-12-31
-PLATFORM_VERSION := 16.1.0
+PLATFORM_VERSION := 12.1.0
 
