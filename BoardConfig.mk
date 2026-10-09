@@ -9,9 +9,10 @@ DEVICE_PATH := device/generic/RE87BAL1
 ALLOW_MISSING_DEPENDENCIES := true
 
 # Architecture (AOSP values: combo file is resolved as TARGET_linux-$(TARGET_ARCH),
-# then core/combo/arch/$(TARGET_ARCH)/$(TARGET_ARCH_VARIANT).mk must exist -> armv8)
+# then core/combo/arch/$(TARGET_ARCH)/$(TARGET_ARCH_VARIANT).mk must exist.
+# Available arm64 profiles in AOSP 12.1: armv8-a, armv8-2a, armv8-2a-dotprod.mk, armv8-a-branchprot.mk)
 TARGET_ARCH := arm64
-TARGET_ARCH_VARIANT := armv8
+TARGET_ARCH_VARIANT := armv8-a
 TARGET_CPU_ABI := arm64-v8a
 TARGET_CPU_ABI2 := 
 TARGET_CPU_VARIANT := generic
