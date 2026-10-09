@@ -8,9 +8,9 @@ DEVICE_PATH := device/generic/RE87BAL1
 # For building with minimal manifest
 ALLOW_MISSING_DEPENDENCIES := true
 
-# Architecture
-TARGET_ARCH := arm64-v8a
-TARGET_ARCH_VARIANT := generic
+# Architecture (AOSP values: combo file is resolved as TARGET_linux-$(TARGET_ARCH))
+TARGET_ARCH := arm64
+TARGET_ARCH_VARIANT := arm64_8a
 TARGET_CPU_ABI := arm64-v8a
 TARGET_CPU_ABI2 := 
 TARGET_CPU_VARIANT := generic
